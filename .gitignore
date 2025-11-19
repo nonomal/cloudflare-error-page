@@ -5,6 +5,10 @@ build/
 __pycache__/
 dist/
 
+node_modules/
+
 .venv/
 venv/
 ttt/
+
+instance/

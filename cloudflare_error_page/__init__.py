@@ -1,3 +1,4 @@
+import html
 import os
 import secrets
 from datetime import datetime, timezone
@@ -18,7 +19,7 @@ def get_resources_folder() -> str:
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
 
 
-def render(params: dict, use_cdn: bool=True) -> str:
+def render(params: dict, allow_html: bool=True, use_cdn: bool=True, show_creator: bool=False) -> str:
     """
     Render a customized Cloudflare error page.
     """
@@ -28,6 +29,9 @@ def render(params: dict, use_cdn: bool=True) -> str:
         params['time'] = utc_now.strftime("%Y-%m-%d %H:%M:%S UTC")
     if not params.get('ray_id'):
         params['ray_id'] = secrets.token_hex(8)
+    if not allow_html:
+        params['what_happened'] = html.escape(params.get('what_happened', ''))
+        params['what_can_i_do'] = html.escape(params.get('what_can_i_do', ''))
 
     template = env.get_template("error.html")
-    return template.render(params=params, resources_use_cdn=use_cdn)
+    return template.render(params=params, resources_use_cdn=use_cdn, show_creator=show_creator)

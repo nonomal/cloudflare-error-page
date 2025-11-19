@@ -50,7 +50,7 @@
                         {% set default_name = 'Host' -%}
                     {% endif %}
                     {% set item = params.get(item_id + '_status', {}) -%}
-                    {% set status = item.get('status', 'ok') -%}
+                    {% set status = item.status or 'ok' -%}
                     {% if item.status_text_color %}
                         {% set text_color = item.status_text_color -%}
                     {% elif status == 'ok' %}
@@ -58,7 +58,7 @@
                     {% elif status == 'error' %}
                         {% set text_color = '#bd2426' -%} {# text-red-error #}
                     {% endif %}
-                    {% set status_text = item.get('status_text', 'Working' if status == 'ok' else 'Not Working') -%}
+                    {% set status_text = item.status_text or ('Working' if status == 'ok' else 'Not Working') -%}
                     <div id="cf-{{item_id}}-status" class="{{'cf-error-source' if params.error_source == item_id else ''}} relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
                         <div class="relative mb-10 md:m-0">
                             <span class="cf-icon-{{icon}} block md:hidden h-20 bg-center bg-no-repeat"></span>
@@ -96,8 +96,13 @@
                     <span class="hidden" id="cf-footer-ip">{{ params.client_ip or '1.1.1.1' }}</span>
                     <span class="cf-footer-separator sm:hidden">&bull;</span>
                 </span>
-                {% set perf_sec_by = params.get('perf_sec_by', {}) %}
-                <span class="cf-footer-item sm:block sm:mb-1"><span>Performance &amp; security by</span> <a rel="noopener noreferrer" href="{{perf_sec_by.link or 'https://www.cloudflare.com/'}}" id="brand_link" target="_blank">{{perf_sec_by.get('text', 'Cloudflare')}}</a></span>
+                {% set perf_sec_by = params.perf_sec_by or {} %}
+                <span class="cf-footer-item sm:block sm:mb-1"><span>Performance &amp; security by</span> <a rel="noopener noreferrer" href="{{perf_sec_by.link or 'https://www.cloudflare.com/'}}" id="brand_link" target="_blank">{{perf_sec_by.text or 'Cloudflare'}}</a></span>
+
+                {% if show_creator %}
+                <span class="cf-footer-separator sm:hidden">&bull;</span>
+                <span class="cf-footer-item sm:block sm:mb-1">Created by <a href="https://virt.moe/cloudflare-error-page/editor/" target="_blank">CF Error Page Editor</a></span>
+                {% endif %}
             </p>
         </div><!-- /.error-footer -->
     </div>
