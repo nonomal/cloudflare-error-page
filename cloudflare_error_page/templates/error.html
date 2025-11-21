@@ -58,7 +58,7 @@
                     {% elif status == 'error' %}
                         {% set text_color = '#bd2426' %}{# text-red-error #}
                     {% endif %}
-                    {% set status_text = item.status_text or ('Working' if status == 'ok' else 'Not Working') %}
+                    {% set status_text = item.status_text or ('Working' if status == 'ok' else 'Error') %}
                     <div id="cf-{{item_id}}-status" class="{{'cf-error-source' if params.error_source == item_id else ''}} relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
                         <div class="relative mb-10 md:m-0">
                             <span class="cf-icon-{{icon}} block md:hidden h-20 bg-center bg-no-repeat"></span>
@@ -88,7 +88,7 @@
 
         <div class="cf-error-footer cf-wrapper w-240 lg:w-full py-10 sm:py-4 sm:px-8 mx-auto text-center sm:text-left border-solid border-0 border-t border-gray-300">
             <p class="text-13">
-                <span class="cf-footer-item sm:block sm:mb-1">Cloudflare Ray ID: <strong class="font-semibold">{{ params.ray_id }}</strong></span>
+                <span class="cf-footer-item sm:block sm:mb-1">Ray ID: <strong class="font-semibold">{{ params.ray_id }}</strong></span>
                 <span class="cf-footer-separator sm:hidden">&bull;</span>
                 <span id="cf-footer-item-ip" class="cf-footer-item hidden sm:block sm:mb-1">
                     Your IP:

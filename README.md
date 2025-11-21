@@ -79,10 +79,6 @@ You can also see this example [here](https://virt.moe/cloudflare-error-page/exam
 ``` JavaScript
 params = {
     "title": "Catastrophic infrastructure failure",
-    "more_information": {
-        "text": "cloudflare.com",
-        "link": "https://youtube.com/watch?v=dQw4w9WgXcQ",
-    },
     "browser_status": {
         "status": "error",
         "status_text": "Out of Memory",
@@ -100,10 +96,6 @@ params = {
     "error_source": "cloudflare",
     "what_happened": "<p>There is a catastrophic failure.</p>",
     "what_can_i_do": "<p>Please try again in a few years.</p>",
-    "perf_sec_by": {
-        "text": "Cloudflare",
-        "link": "https://youtube.com/watch?v=dQw4w9WgXcQ",
-    },
 }
 ```
 
@@ -161,7 +153,7 @@ See [flask_demo.py](examples/flask_demo.py) for embedding the error pages into t
     "more_information": {
         "hidden": false,
         "text": "cloudflare.com", 
-        "link": "https://youtube.com/watch?v=dQw4w9WgXcQ",
+        "link": "https://www.cloudflare.com/",
     },
 
     // Configuration for the Browser/Cloudflare/Host status
@@ -176,7 +168,7 @@ See [flask_demo.py](examples/flask_demo.py) for embedding the error pages into t
         "status": "error",
         "location": "Cloud",
         "name": "Cloudflare",
-        "status_text": "Not Working",
+        "status_text": "Error",
         "status_text_color": "#bd2426",
     },
     "host_status": {
@@ -197,7 +189,7 @@ See [flask_demo.py](examples/flask_demo.py) for embedding the error pages into t
     // Configuration for 'Performance & security by ...' in the footer
     "perf_sec_by": {
         "text": "Cloudflare",
-        "link": "https://youtube.com/watch?v=dQw4w9WgXcQ",
+        "link": "https://www.cloudflare.com/",
     },
 }
 ```

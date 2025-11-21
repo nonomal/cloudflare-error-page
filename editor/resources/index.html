@@ -19,7 +19,7 @@
   <meta property="og:title" content="Cloudflare error page editor" />
   <meta property="og:url" content="https://virt.moe/cloudflare-error-page/editor/" />
   <meta property="og:description" content="Online editor to create customized Cloudflare-styled error pages" />
-  
+
   <meta property="twitter:card" content="summary" />
   <meta property="twitter:site" content="moe::virt" />
   <meta property="twitter:title" content="Cloudflare error page editor" />
@@ -58,12 +58,10 @@
       let initialConfig = {
         "title": "Internal server error",
         "error_code": 500,
-
         "more_information": {
           "hidden": false,
           "text": "cloudflare.com",
         },
-
         "browser_status": {
           "status": "ok",
           "location": "You",
@@ -74,11 +72,11 @@
           "status": "error",
           "location": "San Francisco",
           "name": "Cloudflare",
-          "status_text": "Not Working"
+          "status_text": "Error"
         },
         "host_status": {
           "status": "ok",
-          "location": "The Site",
+          "location": "Website",
           "name": "Host",
           "status_text": "Working"
         },
@@ -96,10 +94,6 @@
         "catastrophic": {
           "title": "Catastrophic infrastructure failure",
           "error_code": 500,
-          "more_information": {
-            "text": "cloudflare.com",
-            "link": "https://youtube.com/watch?v=dQw4w9WgXcQ"
-          },
           "browser_status": {
             "status": "error",
             "status_text": "Out of Memory"
@@ -117,10 +111,6 @@
           "error_source": "cloudflare",
           "what_happened": "There is a catastrophic failure.",
           "what_can_i_do": "Please try again in a few years.",
-          "perf_sec_by": {
-            "text": "Cloudflare",
-            "link": "https://youtube.com/watch?v=dQw4w9WgXcQ"
-          }
         },
         "working": {
           "title": "Web server is working",
@@ -608,14 +598,14 @@
               <div class="form-row">
                 <label for="browser_location">Location</label>
                 <div class="control">
-                  <input id="browser_location" class="form-control form-control-sm" placeholder="Browser" />
+                  <input id="browser_location" class="form-control form-control-sm" placeholder="You" />
                 </div>
               </div>
 
               <div class="form-row">
                 <label for="browser_name">Name</label>
                 <div class="control">
-                  <input id="browser_name" class="form-control form-control-sm" placeholder="You" />
+                  <input id="browser_name" class="form-control form-control-sm" placeholder="Browser" />
                 </div>
               </div>
 
@@ -693,7 +683,7 @@
               <div class="form-row">
                 <label for="host_location">Location</label>
                 <div class="control">
-                  <input id="host_location" class="form-control form-control-sm" placeholder="The site" />
+                  <input id="host_location" class="form-control form-control-sm" placeholder="Website" />
                 </div>
               </div>
 
