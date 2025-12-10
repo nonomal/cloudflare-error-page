@@ -12,6 +12,8 @@ Here's an online editor to create customized error pages. Try it out [here](http
 
 ![Editor](https://github.com/donlon/cloudflare-error-page/blob/images/editor.png?raw=true)
 
+(And thank [@rynzland](https://github.com/rynzland) for the idea!)
+
 ## Quickstart for Programmers
 
 ### Python
