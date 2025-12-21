@@ -20,7 +20,7 @@ env = Environment(
 )
 template = env.from_string('''{% extends base %}
 
-{% block header %}
+{% block html_head %}
 {% if page_icon_url %}
 {% if page_icon_type %}
 <link rel="icon" href="{{ page_icon_url }}" type="{{ page_icon_type }}">
