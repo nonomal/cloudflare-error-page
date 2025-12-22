@@ -453,7 +453,7 @@ function updateSaveAsDialog(e) {
   } else {
     throw new Error('unexpected saveAsType=' + saveAsType)
   }
-  $('saveAsDialogCode').innerHTML = saveAsContent;
+  $('saveAsDialogCode').value = saveAsContent;
   $('saveAsDialogCode').scrollTop = 0;
 
   document.querySelectorAll('#saveAsDialogTypes button').forEach((element) => {

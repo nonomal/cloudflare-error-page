@@ -23,7 +23,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     # Render the error page
-    return render_cf_error_page(<%=paramsArg.replaceAll('\n', '\n    ')%>), 500
+    return render_cf_error_page(<%- paramsArg.replaceAll('\n', '\n    ') %>), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
