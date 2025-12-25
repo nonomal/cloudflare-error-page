@@ -74,41 +74,32 @@ Install the `cloudflare-error-page` package using npm:
 npm install cloudflare-error-page
 ```
 
-The following example demonstrates how to create a simple Express server and return the error page to visitors.
+The following example demonstrates how to create an Express application that automatically handles server errors.
 
 ``` JavaScript
 import express from 'express';
 import { render as render_cf_error_page } from 'cloudflare-error-page';
 
 const app = express();
-const port = 3000;
 
-// Define a route for GET requests to the root URL
 app.get('/', (req, res) => {
+  /* Some code that break prod. Recently pushed by a new employee. */
+  let [feature_values, _] = features
+    .append_with_names(self.config.feature_names)
+    .unwrap();
+}
+
+/* Handle the error intelligently by using a custom error handler */
+app.use((err, req, res) => {
   res.status(500).send(render_cf_error_page({
-    title: "Internal server error",
-    // Browser status is ok
-    browser_status: {
-        status: 'ok',
-    },
-    // Cloudflare status is error
-    cloudflare_status: {
-        status: 'error',
-        status_text: 'Error',
-    },
-    // Host status is also ok
-    host_status: {
-        status: 'ok',
-        location: 'example.com',
-    },
-    error_source: "cloudflare",
+    "title": "Internal server error",
+    "error_code": "500",
+    "what_happened": err.toString(),
+    "what_can_i_do": "Please try again in a few minutes.",
   }));
 });
 
-// Start the server and listen on the specified port
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+app.listen(3000);
 ```
 
 (Thanks [@junduck](https://github.com/junduck) for creating the original NodeJS version.)
