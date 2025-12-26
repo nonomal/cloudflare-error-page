@@ -75,9 +75,7 @@ function genHexString(digits: number): string {
 export function render(
   params: ErrorPageParams,
   allowHtml: boolean = true,
-  moreArgs: {
-    [name: string]: any;
-  } = {}
+  moreArgs: Record<string, any> = {}
 ): string {
   params = { ...params };
 

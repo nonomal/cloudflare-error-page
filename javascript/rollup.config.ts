@@ -4,10 +4,8 @@ import { createFilter } from "@rollup/pluginutils";
 
 function createRawImportPlugin(include: string) {
   const rawFilter = createFilter(include);
-
   return {
     name: "raw-import",
-
     transform(code: string, id: string): any {
       if (rawFilter(id)) {
         return {

@@ -4,23 +4,41 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cloudflare-error-page"
+dynamic = [ "version" ]
 description = "A customizable Cloudflare error page generator"
-authors = [{ name = "Anthony Donlon" }]
-license = { text = "MIT" }
 readme = "README.md"
 requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Anthony Donlon" }]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
 dependencies = [
     "jinja2>=3.0"
 ]
-dynamic = [ "version" ]
 
 [project.urls]
 Homepage = "https://github.com/donlon/cloudflare-error-page"
 
 [tool.hatch.build]
 include = [
-    "cloudflare_error_page/*.py",
-    "cloudflare_error_page/templates/*",
+    "cloudflare_error_page/**/*",
+]
+exclude = [".gitignore"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "cloudflare_error_page/**/*",
+    "resources/**/*",
+    "scripts/**/*",
 ]
 
 [tool.hatch.build.targets.wheel.hooks.custom]

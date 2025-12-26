@@ -29,9 +29,9 @@ class EjsCodeGen implements CodeGen {
   }
 }
 
-function getErrorCode(error_code?: string | number) {
-  const errorCode = error_code || '';
-  return /\d{3}/.test(errorCode + '') ? errorCode : 500;
+function getErrorCode(error_code?: string | number): string {
+  const errorCode = error_code ?? '';
+  return /\d{3}/.test(errorCode + '') ? errorCode : '500';
 }
 
 class JSCodeGen extends EjsCodeGen {
@@ -72,7 +72,7 @@ class PythonCodeGen extends EjsCodeGen {
     params.client_ip = clientIpKey;
     const paramsArg = JSON.stringify(
       params,
-      (key, value) => {
+      (_, value) => {
         if (typeof value === 'boolean') {
           return randomKey + value.toString();
         } else if (value === null) {
@@ -93,7 +93,6 @@ class PythonCodeGen extends EjsCodeGen {
   protected prepareTemplateArgs(params: ErrorPageParams): Record<string, any> {
     return {
       errorCode: getErrorCode(params.error_code),
-      // TODO: format to JS-style object (key w/o parens)
       indentedParams: this.formatPythonArgs(params).replaceAll('\n', '\n    '),
     };
   }

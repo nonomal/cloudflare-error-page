@@ -53,9 +53,7 @@ let initialConfig = {
 // Demo presets (content brief — replace or expand as needed)
 const PRESETS = {
   default: structuredClone(initialConfig),
-  empty: {
-    error_code: '500',
-  },
+  empty: {},
   catastrophic: {
     title: 'Catastrophic infrastructure failure',
     error_code: '500',
@@ -104,7 +102,7 @@ const PRESETS = {
     what_can_i_do: 'Visit the site before it crashes someday.',
   },
   teapot: {
-    title: "I'm a teapot",
+    title: "I'm a Teapot",
     error_code: '418',
     more_information: {
       text: 'rfc2324',
@@ -112,20 +110,16 @@ const PRESETS = {
     },
     browser_status: {
       status: 'ok',
-      location: 'You',
-      status_text: 'Working',
     },
     cloudflare_status: {
       status: 'ok',
-      status_text: 'Working',
     },
     host_status: {
       status: 'ok',
       location: 'Teapot',
-      status_text: 'Working',
     },
     error_source: 'host',
-    what_happened: "The server can not brew coffee for it is a teapot.",
+    what_happened: 'The server can not brew coffee for it is a teapot.',
     what_can_i_do: 'Please try a different coffee machine.',
   },
   consensual: {
@@ -306,7 +300,7 @@ function render() {
   doc.write(pageHtml);
   doc.close();
 
-  updateStatusBlockStyles();
+  updateStatusBlock();
 
   // store last rendered HTML for "open in new tab"
   lastRenderedHtml = pageHtml;
@@ -321,7 +315,7 @@ function openInNewTab() {
 }
 
 function createShareableLink() {
-  $('shareLink').value = '';
+  $('shareLink').value = 'Creating...';
   fetch('../s/create', {
     method: 'POST',
     headers: {
@@ -333,16 +327,19 @@ function createShareableLink() {
   })
     .then((response) => {
       if (!response.ok) {
-        alert('failed to create link');
+        throw new Error('failed to create link');
       }
       return response.json();
     })
     .then((result) => {
       if (result.status != 'ok') {
-        alert('failed to create link');
-        return;
+        throw new Error('failed to create link');
       }
       $('shareLink').value = result.url;
+    })
+    .catch((e) => {
+      alert(e);
+      $('shareLink').value = '';
     });
 }
 function resizePreviewFrame() {
@@ -352,7 +349,7 @@ function resizePreviewFrame() {
 }
 
 /* Update status block colors based on selected status and error_source */
-function updateStatusBlockStyles() {
+function updateStatusBlock() {
   const browserOk = $('browser_status').value === 'ok';
   const cfOk = $('cloudflare_status').value === 'ok';
   const hostOk = $('host_status').value === 'ok';
@@ -360,6 +357,10 @@ function updateStatusBlockStyles() {
   setBlockClass('block_browser', browserOk ? 'status-ok' : 'status-error');
   setBlockClass('block_cloudflare', cfOk ? 'status-ok' : 'status-error');
   setBlockClass('block_host', hostOk ? 'status-ok' : 'status-error');
+
+  $('browser_status_text').placeholder = browserOk ? 'Working' : 'Error';
+  $('cloudflare_status_text').placeholder = cfOk ? 'Working' : 'Error';
+  $('host_status_text').placeholder = hostOk ? 'Working' : 'Error';
 }
 
 function setBlockClass(id, cls) {

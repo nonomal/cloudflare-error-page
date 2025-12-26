@@ -2,12 +2,12 @@
 /*
  * JavaScript Example: Render and serve the Cloudflare error page using Express server
  *
- * Prerequisits:
+ * Prerequisites:
  *   npm install express cloudflare-error-page
  */
 
 import express from 'express';
-import { render as render_cf_error_page } from 'cloudflare-error-page';
+import { render } from 'cloudflare-error-page';
 
 const app = express();
 const port = 3000;
@@ -15,7 +15,8 @@ const port = 3000;
 <%# TODO: use the library as middleware? _%>
 // Define a route for GET requests to the root URL
 app.get('/', (req, res) => {
-  res.status(<%= errorCode %>).send(render_cf_error_page(<%- indentedParams %>));
+  // Render the error page and send to client
+  res.status(<%= errorCode %>).send(render(<%- indentedParams %>));
 });
 
 // Start the server and listen on the specified port

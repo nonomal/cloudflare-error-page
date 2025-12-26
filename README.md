@@ -4,7 +4,7 @@
 
 ## What does this project do?
 
-This project creates customized error pages that mimics the well-known Cloudflare error page. You can also embed it into your website.
+This project creates customized error pages that mimic the well-known Cloudflare error page. You can also embed it into your own website.
 
 ## Online Editor
 
@@ -16,7 +16,7 @@ Here's an online editor to create customized error pages and example server apps
 
 ### Python
 
-Install `cloudflare-error-page` with pip.
+Install `cloudflare-error-page` using pip.
 
 ``` Bash
 # Install from PyPI
@@ -26,7 +26,7 @@ pip install cloudflare-error-page
 pip install git+https://github.com/donlon/cloudflare-error-page.git
 ```
 
-Then you can generate an error page using the `render` function. ([example.py](examples/example.py))
+Then an error page can be generated using the `render` function provided by the package. ([example.py](examples/example.py))
 
 ``` Python
 import webbrowser
@@ -48,7 +48,7 @@ error_page = render_cf_error_page({
         "status": 'ok',
         "location": 'example.com',
     },
-    # can be 'browser', 'cloudflare', or 'host'
+    # Position of the error indicator, valid options are 'browser', 'cloudflare', and 'host'
     'error_source': 'cloudflare',
 
     # Texts shown in the bottom of the page
@@ -56,9 +56,11 @@ error_page = render_cf_error_page({
     'what_can_i_do': '<p>Please try again in a few minutes.</p>',
 })
 
+# Write generated webpage to file
 with open('error.html', 'w') as f:
     f.write(error_page)
 
+# Open the generated page in browser
 webbrowser.open('error.html')
 ```
 
@@ -83,14 +85,14 @@ import { render as render_cf_error_page } from 'cloudflare-error-page';
 const app = express();
 
 app.get('/', (req, res) => {
-  /* Some code that break prod. Recently pushed by a new employee. */
+  /* Some code that break prod. Pushed by a new employee recently. */
   let [feature_values, _] = features
     .append_with_names(self.config.feature_names)
     .unwrap();
 }
 
-/* Handle the error intelligently by using a custom error handler */
 app.use((err, req, res) => {
+  /* Handle the error intelligently by using a custom handler */
   res.status(500).send(render_cf_error_page({
     "title": "Internal server error",
     "error_code": "500",
@@ -182,15 +184,15 @@ params = {
 
 Ray ID and user IP field in the error page can be set by `ray_id` and `client_ip` properties in the `params` argument passed to the render function. The real Cloudflare Ray ID and the data center location of current request can be extracted from the `Cf-Ray` request header (e.g. `Cf-Ray: 230b030023ae2822-SJC`). Detailed description of this header can be found at [Cloudflare documentation](https://developers.cloudflare.com/fundamentals/reference/http-headers/#cf-ray).
 
-To lookup the city name of the data center corresponding to the three letter code in the header, you can use a location list from [here](https://github.com/Netrvin/cloudflare-colo-list/blob/main/DC-Colos.json)
+To lookup the city name of the data center corresponding to the three letter code in the header, you can use a location list [here](https://github.com/Netrvin/cloudflare-colo-list/blob/main/DC-Colos.json)
 
-The demo server runs in our website did handle these. Take a look at [this file](https://github.com/donlon/cloudflare-error-page/blob/94c3c4ddbe521dee0c9a880ef33fa7a9f0720cbe/editor/server/utils.py#L34) for reference.
+The demo server runs in our website did handle these. Take a look at [this file](https://github.com/donlon/cloudflare-error-page/blob/e2226ff5bb7a877c9fe3ac09deadccdc58b0c1c7/editor/server/utils.py#L78) for reference.
 
 ## See also
 
 - [cloudflare-error-page-3th.pages.dev](https://cloudflare-error-page-3th.pages.dev/)
 
-    Error page of every HTTP status code (reload to show random page).
+    Error page of every HTTP status code (reload to show random pages).
 
 - [oftx/cloudflare-error-page](https://github.com/oftx/cloudflare-error-page)
 
@@ -205,7 +207,7 @@ The demo server runs in our website did handle these. Take a look at [this file]
     "error_code": "500",
     "time": "2025-11-18 12:34:56 UTC",  // Current UTC time will be shown if empty
 
-    // Configuration of "Visit ... for more information" line
+    // Configuration of "Visit ... for more information"
     "more_information": {
         "hidden": false,
         "text": "cloudflare.com", 
@@ -213,7 +215,7 @@ The demo server runs in our website did handle these. Take a look at [this file]
         "for": "more information",
     },
 
-    // Configuration of the Browser/Cloudflare/Host status
+    // Configuration of the Browser/Cloudflare/Host status block
     "browser_status": {
         "status": "ok", // "ok" or "error"
         "location": "You",
@@ -235,7 +237,7 @@ The demo server runs in our website did handle these. Take a look at [this file]
         "status_text": "Working",
         "status_text_color": "#9bca3e",
     },
-    // Position of the error indicator, can be "browser", "cloudflare", or "host"
+    // Position of the error indicator, valid options are 'browser', 'cloudflare', and 'host'
     "error_source": "host",
 
     "what_happened": "<p>There is an internal server error on Cloudflare's network.</p>",

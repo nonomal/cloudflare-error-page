@@ -2,7 +2,7 @@
 #
 # Python Example: Render and serve the Cloudflare error page using Flask server
 #
-# Prerequisits:
+# Prerequisites:
 #   pip install flask cloudflare-error-page
 #
 
@@ -10,13 +10,15 @@ from flask import Flask, request
 from cloudflare_error_page import render as render_cf_error_page
 
 app = Flask(__name__)
+port = 5000
 
 <%# TODO: use the library as middleware? _%>
 # Define a route for GET requests to the root URL
 @app.route("/")
 def index():
-    # Render the error page
+    # Render the error page and send to client
     return render_cf_error_page(<%- indentedParams %>), <%= errorCode %>
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    # Start the server and listen on the specified port
+    app.run(debug=True, port=port)

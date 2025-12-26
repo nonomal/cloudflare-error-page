@@ -34,7 +34,7 @@ fs.writeFileSync('error.html', errorPage);
 
 ## API Reference
 
-### `render(params: ErrorPageParams, allowHtml?: boolean, moreArgs?: { [name: string]: any; }): string`
+### `render(params: ErrorPageParams, allowHtml?: boolean, moreArgs?: Record<string, any>): string`
 
 Generates an HTML error page based on the provided parameters.
 
