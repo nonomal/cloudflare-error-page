@@ -35,7 +35,7 @@ def index():
             "location": "example.com"
         },
         "error_source": "cloudflare",
-        "what_happened": "<p>There is an internal server error on Cloudflare\"s network.</p>",
+        "what_happened": "<p>There is an internal server error on Cloudflare's network.</p>",
         "what_can_i_do": "<p>Please try again in a few minutes.</p>"
     }
 

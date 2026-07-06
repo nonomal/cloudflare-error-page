@@ -5,8 +5,7 @@
   - inputs call render() on change
   - "Open in new tab" opens the rendered HTML in a new window using a blob URL
 */
-
-import 'bootstrap/js/src/modal.js';
+import Modal from 'bootstrap/js/src/modal.js';
 import Popover from 'bootstrap/js/src/popover.js';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-json.js';
@@ -17,6 +16,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'prismjs/themes/prism.css';
 
 import { jsCodeGen, jsonCodeGen, pythonCodeGen } from './codegen';
+
+if (window.top !== window) {
+  new Modal('#notOriginalDialog').show();
+}
 
 // can be changed if specified by '?from=<name>'
 let initialConfig = {
@@ -35,7 +38,6 @@ let initialConfig = {
   },
   cloudflare_status: {
     status: 'error',
-    location: 'San Francisco',
     name: 'Cloudflare',
     status_text: 'Error',
   },
@@ -314,7 +316,10 @@ function openInNewTab() {
   wnd.document.documentElement.innerHTML = lastRenderedHtml;
 }
 
+let createLinkBusy = false;
 function createShareableLink() {
+  if (createLinkBusy) return;
+  createLinkBusy = true;
   $('shareLink').value = 'Creating...';
   fetch('../s/create', {
     method: 'POST',
@@ -324,6 +329,7 @@ function createShareableLink() {
     body: JSON.stringify({
       parameters: window.lastCfg,
     }),
+    signal: AbortSignal.timeout(5000), // timeout
   })
     .then((response) => {
       if (!response.ok) {
@@ -340,6 +346,9 @@ function createShareableLink() {
     .catch((e) => {
       alert(e);
       $('shareLink').value = '';
+    })
+    .finally(() => {
+      createLinkBusy = false;
     });
 }
 function resizePreviewFrame() {
